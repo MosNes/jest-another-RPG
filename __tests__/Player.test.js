@@ -70,3 +70,34 @@ test("subtracts from player health without going negative", () => {
     console.log("hp -9999: ",player.health);
     expect(player.health).toEqual(0);
 } );
+
+test("gets player attack value", () => {
+    const player = new Player('MosNes');
+    player.strength = 10;
+
+    //player attack value should be equal to strength +/- 5
+    expect(player.getAttackValue()).toBeGreaterThanOrEqual(5);
+    expect(player.getAttackValue()).toBeLessThanOrEqual(15);
+    
+} );
+
+test("adds a potion to player inventory", () => {
+    const player = new Player('MosNes');
+    const oldCount = player.inventory.length;
+
+    player.addPotion(new Potion());
+
+    expect(player.inventory.length).toBeGreaterThan(oldCount);
+    
+} );
+
+test("uses a potion from inventory", () => {
+    const player = new Player('MosNes');
+    player.inventory = [new Potion(), new Potion(), new Potion()];
+    const oldCount = player.inventory.length;
+
+    //use potion by index
+    player.usePotion(1);
+
+    expect(player.inventory.length).toBeLessThan(oldCount);
+} );
